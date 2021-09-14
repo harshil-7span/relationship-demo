@@ -29,4 +29,9 @@ class Product extends Model
     public function orders(){
         return $this->belongsToMany(Order::class)->withPivot('quantity');
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'review');
+    }
 }
