@@ -18,6 +18,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $data = $this->productService->collection($request->all());
+        // return new productcollection
         return response()->json($data);
     }
 

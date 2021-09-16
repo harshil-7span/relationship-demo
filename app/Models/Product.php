@@ -13,21 +13,19 @@ class Product extends Model
         'name', 'price'
     ];
 
-    protected $hidden = ['created_at', 'updated_at' , 'pivot', 'quantity'];
+    protected $hidden = ['created_at', 'updated_at', 'pivot'];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = ['quantity'];
-
-    public function getQuantityAttribute()
-    {
-        return (!empty($this->pivot)) ? $this->pivot->quantity : 0;
-    }
+    // m2m relationship
+    // public function orders(){
+    //     return $this->belongsToMany(Order::class)->using(OrderProduct::class)->withPivot('quantity');
+    // }
 
     public function orders(){
-        return $this->belongsToMany(Order::class)->withPivot('quantity');
+        return $this->hasMany(OrderProduct::class);
     }
 
     public function reviews()

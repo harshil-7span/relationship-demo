@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Order\Upsert;
+use App\Http\Resources\OrderCollection;
+use App\Models\OrderProduct;
 
 class OrderController extends Controller
 {
@@ -17,6 +19,7 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+        // $data = OrderProduct::get();
         $data = $this->orderService->collection($request->all());
         return response()->json($data);
     }

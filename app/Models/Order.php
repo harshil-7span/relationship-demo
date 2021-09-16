@@ -14,16 +14,14 @@ class Order extends Model
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'pivot'];
-    
-    protected $appends = ['quantity'];
 
-    public function getQuantityAttribute()
-    {
-        return (!empty($this->pivot)) ? $this->pivot->quantity : 0;
-    }
+    // m2m relationship
+    // public function products(){
+    //     return $this->belongsToMany(product::class)->withPivot('quantity');
+    // }
 
     public function products(){
-        return $this->belongsToMany(product::class)->withPivot('quantity');
+        return $this->hasMany(OrderProduct::class);
     }
 
     public function user()
