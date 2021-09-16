@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "bc7c4eb3-001c-4d78-bd35-8d828c0c0f66",
+		"name": "Relationsip",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "e-commerce.demo:8888/api/product?include=orders,orders.user,reviews,orders.reviews,orders.reviews.user",
+					"host": [
+						"e-commerce",
+						"demo"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"product"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "orders,orders.user,reviews,orders.reviews,orders.reviews.user"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "e-commerce.demo:8888/api/order?include=products,user,reviews",
+					"host": [
+						"e-commerce",
+						"demo"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"order"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "products,user,reviews"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "e-commerce.demo:8888/api/user?include=orders,orders.products,orders.products.reviews.reviews",
+					"host": [
+						"e-commerce",
+						"demo"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"user"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "orders,orders.products,orders.products.reviews.reviews"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Reviews",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "review_type",
+							"value": "order",
+							"description": "order,product",
+							"type": "text"
+						},
+						{
+							"key": "type_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "review",
+							"value": "order review",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": "e-commerce.demo:8888/api/review"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reviews",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "e-commerce.demo:8888/api/review?include=reviewable",
+					"host": [
+						"e-commerce",
+						"demo"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"review"
+					],
+					"query": [
+						{
+							"key": "include",
+							"value": "reviewable"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -33,6 +33,6 @@ class Order extends Model
 
     public function reviews()
     {
-        return $this->morphMany(Review::class, 'review');
+        return $this->morphMany(Review::class, 'reviewable');
     }
 }

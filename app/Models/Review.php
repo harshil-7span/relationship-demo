@@ -17,8 +17,12 @@ class Review extends Model
         'user_id','review'
     ];
 
-    public function reviews()
+    public function reviewable()
     {
         return $this->morphTo();
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

@@ -17,6 +17,7 @@ class ReviewController extends Controller
     }
 
     public function index(Request $request){
+        $with = [];
         if(isset($request->include) && !empty($request->include)){
             $with = explode(',', $request->include);
         }
