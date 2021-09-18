@@ -2,45 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\Product;
+use App\Http\Requests\Review\Upsert;
 use Illuminate\Http\Request;
-use App\Models\Review;
+use App\Services\ReviewService;
+use App\Http\Resources\Review\Resource as ReviewResource;
+use App\Http\Resources\Review\Collection as ReviewCollection;
 
 class ReviewController extends Controller
 {
-    protected $reviewObj;
+    protected $reviewService;
 
-    public function __construct(Review $reviewObj)
+    public function __construct(ReviewService $reviewService)
     {
-        $this->reviewObj = $reviewObj;    
+        $this->reviewService = $reviewService;
     }
 
     public function index(Request $request){
-        $with = [];
-        if(isset($request->include) && !empty($request->include)){
-            $with = explode(',', $request->include);
-        }
-        $review = $this->reviewObj->with($with)->get();
-        return response()->json($review);
+        $reviews = $this->reviewService->collection($request);
+        // return response()->json($reviews);
+        return new ReviewCollection($reviews);
     }
 
-    public function store(Request $request){
-        if($request->review_type == 'product'){
-            $reviewType = Product::find($request->type_id);
-        } else {
-            $reviewType = Order::find($request->type_id);
-        }
-
-        if(empty($reviewType)){
-            return response()->json(['error' => ['message'=> 'Review type not found.']]);
-        }
-
-        $review = $reviewType->reviews()->create([
-            'review' => $request->review,
-            'user_id' => $request->user_id
-        ]);
-
-        return response()->json($review);
+    public function store(Upsert $request){
+        $review = $this->reviewService->store($request);
+        return new ReviewResource($review);
     }
 }

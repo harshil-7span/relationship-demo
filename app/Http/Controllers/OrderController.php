@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Order\Upsert;
-use App\Http\Resources\OrderCollection;
+use App\Http\Resources\Order\Collection as OrderCollection;
+use App\Http\Resources\Order\Resource as OrderResource;
 use App\Models\OrderProduct;
 
 class OrderController extends Controller
@@ -19,14 +20,13 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        // $data = OrderProduct::get();
-        $data = $this->orderService->collection($request->all());
-        return response()->json($data);
+        $orders = $this->orderService->collection($request->all());
+        return new OrderCollection($orders);
     }
 
-    public function show($id){
-        $data = $this->orderService->resource($id);
-        return response()->json($data);
+    public function show($id, Request $request){
+        $order = $this->orderService->resource($id, $request->all());
+        return new OrderResource($order);
     }
 
     public function store(Upsert $request){

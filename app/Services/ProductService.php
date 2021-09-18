@@ -23,7 +23,7 @@ class ProductService
 
     public function resource($id){
         $product = $this->productObj->find($id);
-        $product->orders;
+        // $product->orders;
         if (!empty($product)) {
             return $product;
         } else {

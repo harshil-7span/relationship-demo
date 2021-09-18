@@ -17,6 +17,10 @@ class Review extends Model
         'user_id','review'
     ];
 
+    public function setReviewAttribute($value){
+        $this->attributes['review'] = strtolower($value);
+    }
+
     public function reviewable()
     {
         return $this->morphTo();

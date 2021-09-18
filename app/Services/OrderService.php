@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 
 class OrderService
@@ -22,9 +23,12 @@ class OrderService
         return $this->orderObj->with($with)->get();
     }
 
-    public function resource($id){
-        $order = $this->orderObj->find($id);
-        $order->products;
+    public function resource($id, $inputs = null){
+        $with = [];
+        if(isset($inputs['include']) && !empty($inputs['include'])){
+            $with = explode(',', $inputs['include']);
+        }
+        $order = $this->orderObj->with($with)->find($id);
         if (!empty($order)) {
             return $order;
         } else {
@@ -36,7 +40,12 @@ class OrderService
         $product = Product::find($inputs['product_id']);
         $inputs += ['price' => $product->price * $inputs['quantity']];
         $order = $this->orderObj->create($inputs);
-        $order->products()->attach($inputs['product_id'], ['quantity' => $inputs['quantity']]);
+        OrderProduct::insert([
+            'order_id' => $order->id,
+            'product_id' => $inputs['product_id'],
+            'quantity' => $inputs['quantity']
+        ]);
+        // $order->products()->attach($inputs['product_id'], ['quantity' => $inputs['quantity']]);
         return $order;
     }
 
@@ -45,7 +54,8 @@ class OrderService
         if(isset($order['error'])){
             return $order;
         }
-        $order->products()->detach();
+        // $order->products()->detach();
+        OrderProduct::where('order_id', $id)->delete();
         $order = $order->delete();
         return ['success' => $order];
     }

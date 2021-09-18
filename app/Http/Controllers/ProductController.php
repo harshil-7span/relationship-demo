@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Requests\Product\Upsert;
+use App\Http\Resources\Product\Collection as ProductCollection;
+use App\Http\Resources\Product\Resource as ProductResource;
 
 class ProductController extends Controller
 {
@@ -17,28 +19,27 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $data = $this->productService->collection($request->all());
-        // return new productcollection
-        return response()->json($data);
+        $products = $this->productService->collection($request->all());
+        return new ProductCollection($products);
     }
 
     public function show($id){
-        $data = $this->productService->resource($id);
-        return response()->json($data);
+        $product = $this->productService->resource($id);
+        return new ProductResource($product);
     }
 
     public function store(Upsert $request){
-        $data = $this->productService->store($request->all());
-        return response()->json($data);
+        $product = $this->productService->store($request->all());
+        return new ProductResource($product);
     }
 
     public function update($id ,Upsert $request){
-        $data = $this->productService->update($id, $request->all());
-        return response()->json($data);
+        $product = $this->productService->update($id, $request->all());
+        return new ProductResource($product);
     }
 
     public function destroy($id, Request $request){
-        $data = $this->productService->delete($id);
-        return response()->json($data);
+        $product = $this->productService->delete($id);
+        return response()->json($product);
     }
 }

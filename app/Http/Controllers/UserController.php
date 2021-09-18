@@ -3,23 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\Http\Resources\User\Resource as UserResource;
+use App\Http\Resources\User\Collection as UserCollection;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    protected $userService;
+    public function __construct(UserService $userService)
     {
-        $with = [];
-        if(isset($request['include']) && !empty($request['include'])){
-            $with = explode(',', $request['include']);
-        }
-        $user = User::with($with)->get();
-        return response()->json($user);
+        $this->userService = $userService;
     }
 
-    public function show($id)
+    public function index(Request $request)
     {
-        $user = User::with('orders')->find($id);
-        return response()->json($user);
+        $users = $this->userService->collection($request);
+        return new UserCollection($users);
+    }
+
+    public function show($id, Request $request)
+    {
+        $user = $this->userService->show($id, $request);
+        return new UserResource($user);
     }
 }

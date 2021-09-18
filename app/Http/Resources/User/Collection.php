@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\User;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PoroductCollection extends ResourceCollection
+class Collection extends ResourceCollection
 {
-    public $collects = 'App\Http\Resources\ProductResource';
+    public $collects = 'App\Http\Resources\User\Resource';    
     public function toArray($request)
     {
         return $this->collection;
