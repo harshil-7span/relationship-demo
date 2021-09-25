@@ -10,10 +10,12 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
+        "laravel/telescope": "^4.6",
         "laravel/tinker": "^2.5",
         "spatie/laravel-query-builder": "^2.8"
     },
     "require-dev": {
+        "beyondcode/laravel-query-detector": "^1.5",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
