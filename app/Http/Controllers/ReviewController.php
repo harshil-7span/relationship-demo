@@ -19,8 +19,12 @@ class ReviewController extends Controller
 
     public function index(Request $request){
         $reviews = $this->reviewService->collection($request);
-        // return response()->json($reviews);
         return new ReviewCollection($reviews);
+    }
+
+    public function show($id,Request $request){
+        $reviews = $this->reviewService->resource($id,$request);
+        return new ReviewResource($reviews);
     }
 
     public function store(Upsert $request){

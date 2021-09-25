@@ -14,16 +14,11 @@ class ProductService
 
     public function collection($inputs = null)
     {
-        $with = [];
-        if(isset($inputs['include']) && !empty($inputs['include'])){
-            $with = explode(',', $inputs['include']);
-        }
-        return $this->productObj->with($with)->get();
+        return $this->productObj->getQB()->get();
     }
 
     public function resource($id){
-        $product = $this->productObj->find($id);
-        // $product->orders;
+        $product = $this->productObj->getQB()->find($id);
         if (!empty($product)) {
             return $product;
         } else {

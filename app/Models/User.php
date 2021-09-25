@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\BaseModel;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, BaseModel;
 
     protected $fillable = [
         'name',
@@ -30,11 +31,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // protected $append = ['']
-
-    // public function getNameAttribute($value){
-    //     return strtoupper($value);
-    // }
+    public $queryable = [
+        'id'
+    ];
 
     public function setNameAttribute($value){
         $this->attributes['name'] = strtolower($value);
@@ -47,4 +46,19 @@ class User extends Authenticatable
     public function reviews(){
         return $this->hasMany(Review::class);
     }
+
+    protected $relationship = [
+        'orders' => [
+            'model' => 'App\\Models\\Order',
+        ],
+        'orders.products' => [
+            'model' => 'App\\Models\\Order',
+        ],
+        'orders.products.product' => [
+            'model' => 'App\\Models\\Order',
+        ],
+        'reviews' => [
+            'model' => 'App\\Models\\Review',
+        ],
+    ];
 }

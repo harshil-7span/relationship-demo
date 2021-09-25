@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\BaseModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, BaseModel;
 
     protected $fillable = [
         'user_id', 'address', 'price','is_paid'
@@ -18,7 +19,7 @@ class Order extends Model
 
     protected $casts = [
         'is_paid' => 'boolean',
-        // 'created_at' => 'datetime:Y-m-d',
+        'created_at' => 'datetime:Y-m-d',
     ];
 
     /*
@@ -28,6 +29,10 @@ class Order extends Model
     {
         return $date->format('d-m-Y');
     }
+
+    public $queryable = [
+        'id'
+    ];
 
     // m2m relationship
     // public function products(){
@@ -47,4 +52,22 @@ class Order extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+
+    protected $relationship = [
+        'products' => [
+            'model' => 'App\\Models\\OrderProduct',
+        ],
+        'products.order' => [
+            'model' => 'App\\Models\\OrderProduct',
+        ],
+        'products.product.reviews' => [
+            'model' => 'App\\Models\\OrderProduct',
+        ],
+        'user' => [
+            'model' => 'App\\Models\\User',
+        ],
+        'reviews' => [
+            'model' => 'App\\Models\\Review',
+        ],
+    ];
 }

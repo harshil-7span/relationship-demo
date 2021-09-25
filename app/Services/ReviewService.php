@@ -16,11 +16,12 @@ class ReviewService
 
     public function collection($inputs = null)
     {
-        $with = [];
-        if(isset($inputs->include) && !empty($inputs->include)){
-            $with = explode(',', $inputs->include);
-        }
-        return $this->reviewObj->with($with)->get();
+        return $this->reviewObj->getQB()->get();
+    }
+
+    public function resource($id, $inputs = null)
+    {
+        return $this->reviewObj->getQB()->find($id);
     }
 
     public function store($inputs){

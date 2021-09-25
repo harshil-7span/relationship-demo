@@ -14,20 +14,12 @@ class UserService
 
     public function collection($inputs = null)
     {
-        $with = [];
-        if(isset($inputs['include']) && !empty($inputs['include'])){
-            $with = explode(',', $inputs['include']);
-        }
-        $users = $this->userObj->with($with)->get();
+        $users = $this->userObj->getQB()->get();
         return $users;
     }
 
     public function show($id, $inputs){
-        $with = [];
-        if(isset($inputs['include']) && !empty($inputs['include'])){
-            $with = explode(',', $inputs['include']);
-        }
-        $user = $this->userObj->with($with)->find($id);
+        $user = $this->userObj->getQB()->find($id);
         if(empty($user)){
             return ['error' => ['message'=> 'User not found.']];
         }

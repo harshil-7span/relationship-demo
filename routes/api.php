@@ -25,4 +25,4 @@ use App\Http\Controllers\UserController;
 Route::apiResource('product', ProductController::class);
 Route::apiResource('order', OrderController::class);
 Route::apiResource('user', UserController::class)->only('index', 'show');
-Route::apiResource('review', ReviewController::class)->only('index', 'store');
+Route::apiResource('review', ReviewController::class)->only('index', 'show','store');

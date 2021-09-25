@@ -2,8 +2,8 @@
 namespace App\Services;
 
 use App\Models\Order;
-use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\OrderProduct;
 
 class OrderService
 {
@@ -16,19 +16,11 @@ class OrderService
 
     public function collection($inputs = null)
     {
-        $with = [];
-        if(isset($inputs['include']) && !empty($inputs['include'])){
-            $with = explode(',', $inputs['include']);
-        }
-        return $this->orderObj->with($with)->get();
+        return $this->orderObj->getQB()->get();
     }
 
     public function resource($id, $inputs = null){
-        $with = [];
-        if(isset($inputs['include']) && !empty($inputs['include'])){
-            $with = explode(',', $inputs['include']);
-        }
-        $order = $this->orderObj->with($with)->find($id);
+        $order = $this->orderObj->getQB()->find($id);
         if (!empty($order)) {
             return $order;
         } else {
