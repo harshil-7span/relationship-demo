@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,11 @@ use App\Http\Controllers\UserController;
 //     return $request->user();
 // });
 
-Route::apiResource('product', ProductController::class);
-Route::apiResource('order', OrderController::class);
-Route::apiResource('user', UserController::class)->only('index', 'show');
-Route::apiResource('review', ReviewController::class)->only('index', 'show','store');
+Route::post('login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::apiResource('product', ProductController::class);
+    Route::apiResource('order', OrderController::class);
+    Route::apiResource('user', UserController::class)->only('index', 'show');
+    Route::apiResource('review', ReviewController::class)->only('index', 'show','store');
+});
