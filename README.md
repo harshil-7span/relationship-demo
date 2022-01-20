@@ -1,6 +1,8 @@
-## About The Learning Project
+## Laravel Relationship Demo
 
 This project is developed in laravel (8.0)
+Impelemnt the coding standards
+Added the request traking tools
 
 ## Laravel Packages
 
@@ -14,3 +16,28 @@ This project is developed in laravel (8.0)
 - one To Many
 - has Many
 - morph Many
+
+## Installation
+
+We need composer to install all packages.
+Here the complete instruction to install composer https://getcomposer.org/doc/00-intro.md
+
+Let's install all packages, by running this command from Terminal
+
+```
+composer install
+```
+
+Let's do some migration.
+
+```
+php artisan migrate
+```
+
+And run the web server
+
+```
+php artisan serve
+```
+
+Now, visit http://localhost:8000 to try the demo.
