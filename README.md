@@ -41,3 +41,44 @@ php artisan serve
 ```
 
 Now, visit http://localhost:8000 to try the demo.
+
+## Defination
+
+Create the below API's
+
+1. Login API
+- Login the user with `email address` and `password` and generate the authorization token using `laravel/passport` Package.
+
+2. Products API
+- Create the product API
+- Product Collection and Resource API
+- Product Update API
+- Product Delete API
+- Product table filed
+    1. name
+    2. price (Price of the single product)
+    
+3. Place order API
+- After user login will be place the order and with multiple products and quentiry
+
+4. Reports of the orders
+- Below data added into the reports listing and single details API
+    1. User Name
+    2. Products
+    3. Product quntity
+    4. Order Total
+    
+5. Add reviews
+- User will be add the review of the orders and products.
+- Collection and resource API of the review
+
+6. User Listing API
+- User collection and resource API
+
+### Rules
+1. Create the table using migrations
+2. Added the testing data into all table using seeder
+3. Create the `Resource` and `Collection` file for the API response
+4. The database is must be soft delete
+5. The validation is add into the `Request` file
+6. User will be do the all operation after the login
